@@ -2,7 +2,7 @@ import {PrismaClient} from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import {StatusCodes} from 'http-status-codes';
 import 'dotenv/config';
-import 'bcrypt'
+import bcrypt from 'bcrypt'
 const prisma = new PrismaClient()
  
 async function getuser(req, res){
@@ -23,8 +23,10 @@ async function createuser(req, res){
         console.log(users)
         if(users.email !== null && users.email === email){
             console.log(users.email,email)
+            // create and encrypt the password us
+            let hashedpassword = bcrypt.hash(req.body.password, 10)
             const newuser = await prisma.user.create({
-                data : req.body
+                data: {...req.body, password : hashedpassword} 
             })
             res.status(StatusCodes.CREATED).json({message:"success",newuser})
             console.log(newuser)
@@ -55,7 +57,8 @@ console.log(email)
 // check if password provided is equal to the one stored in the DB
 // if password matches,send the user a token,
 // create the token
-if(userdata.email && data.password === password){
+// compare the bcrypt password with what the user has entered.
+if(userdata.email && bcrypt.compareSync(password, userdata.password)){
     // hash password
 
     console.log(user.email)
