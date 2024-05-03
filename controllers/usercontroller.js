@@ -24,7 +24,7 @@ async function createuser(req, res){
         if(users.email !== null && users.email === email){
             console.log(users.email,email)
             // create and encrypt the password us
-            let hashedpassword = bcrypt.hash(req.body.password, 10)
+            let hashedpassword = await bcrypt.hash(req.body.password, 10)
             const newuser = await prisma.user.create({
                 data: {...req.body, password : hashedpassword} 
             })
