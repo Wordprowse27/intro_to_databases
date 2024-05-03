@@ -59,7 +59,7 @@ if(userdata.email && data.password === password){
     // hash password
 
     console.log(user.email)
-    let userData = {name: user.name, email: user.email, rolebase: user.role}
+    let userData = {name: user.name, email: user.email, roles: user.role}
     let hash = jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: "24h"})
     res.status(StatusCodes.CREATED).json({message: "User Created", hash})
 // else send error message
@@ -86,3 +86,4 @@ export  {getuser,
         userlogin,
         createuser
 }
+
