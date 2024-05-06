@@ -5,7 +5,8 @@ import { userschema, validate1} from "../helper function/user-validation.js";
 import {isADMIN} from "../helper function/role.access.js"
 const router = express.Router()
 
-router.get("/",[checkforauthtoken,validate1(userschema),isADMIN],getuser)
+// router.get("/",[checkforauthtoken,validate1(userschema),isADMIN],getuser)
+router.get("/",getuser)
 router.patch("/:id",checkforauthtoken,validate1(userschema),)
 router.post("/login", userlogin)
 router.post("/", createuser)
