@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
  
 async function getuser(req, res){
         const users = await prisma.User.findMany()
-        res.status(StatusCodes.OK).json(users)
+        res.status(StatusCodes.OK).json({users, success : true})
 }
 // create a user
 async function createuser(req, res){
